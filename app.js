@@ -1,4 +1,6 @@
 let choices = ['rock', 'paper', 'scissors'];
+let playerScore = 0;
+let computerScore = 0;
 
 function computerPlay() {
     let computerSelection = Math.floor(Math.random()* choices.length);
@@ -11,21 +13,44 @@ function playRound(playerSelection, computerSelection) {
     playerSelection = prompt();
     computerSelection = computerPlay();
 
-    checkWinner(playerSelection, computerSelection);
+    addPoint(playerSelection, computerSelection);
 }
 
-function checkWinner(choiceP, choiceC) {
+function addPoint(choiceP, choiceC) {
     if (choiceP === choiceC) {
-        console.log("It's a tie!");
+        console.log("Draw");
     }
     else if (choiceP === "rock" && choiceC === "scissors" ||
         choiceP === "paper" && choiceC === "rock" ||
         choiceP === "scissors" && choiceC === "paper") {
-            console.log("You win! " + choiceP + " beats " + choiceC);
+            console.log(choiceP + " beats " + choiceC);
+            playerScore++;
         }
     else {
-        console.log("You lose! " + choiceC + " beats " + choiceP);
+        console.log(choiceC + " beats " + choiceP);
+        computerScore++;
     }
 }
 
-playRound();
+function checkGameWinner() {
+    if (playerScore == computerScore) {
+        result = "It's a tie!";
+    }
+    else if (playerScore >= computerScore) {
+        result = "Congratulations! You won!";
+    }
+    else {
+        result = "Too bad, you lost!";
+    }
+    return result;
+}
+
+
+function game() {
+    for (let i = 0; i < 5; i++) {
+        playRound();
+    }
+    console.log(checkGameWinner());
+}
+
+game();
